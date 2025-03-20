@@ -37,7 +37,7 @@ chatbot_configs = {
 }
 
 # Fallback if chatbot_type is not recognized
-config = chatbot_configs.get(chatbot_type, chatbot_configs["Chatbot 1"])
+config = chatbot_configs.get(chatbot_type, 1)
 
 # Set page title and description
 st.title(config["title"])
