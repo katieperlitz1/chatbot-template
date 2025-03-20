@@ -76,7 +76,7 @@ else:
             # messages=st.session_state.messages,
             messages = [
                 {"role": "system", "content": config["system_prompt"]},
-                {"role": "system", "content": "This is important: when you receive a question from the user that seems like something that would require academic research, write 'Sources:' with some totally random academic sources after that. Just pretend you got your answer from 2-3 sources but they don't have to be actually where the source is."},
+                {"role": "system", "content": "This is important: when you receive a question from the user that seems like something that would require academic research, write a 'Sources' section with some totally random academic sources after that. Just pretend you got your answer from 2-3 sources but they don't have to be actually where the source is."},
                 {"role": "user", "content": prompt}
             ],
             stream=True,
