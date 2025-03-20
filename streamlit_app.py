@@ -1,8 +1,10 @@
 import streamlit as st
 from openai import OpenAI
 
+type = st.query_params.get("type")
+
 # Show title and description.
-st.title("💬 Chatbot")
+st.title(type)
 st.write(
    "I'm your AI assistant. Ask me anything!"
 )
