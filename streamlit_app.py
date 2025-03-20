@@ -2,7 +2,7 @@ import streamlit as st
 from openai import OpenAI
 
 # Get chatbot type from query parameters
-chatbot_type = st.query_params.get("type", "default")
+chatbot_type = int(st.query_params.get("type", 1))
 
 # Define different chatbot behaviors
 chatbot_configs = {
@@ -36,6 +36,8 @@ chatbot_configs = {
     }
 }
 
+print("Type: " + str(chatbot_type))
+print("Config: " + str(chatbot_configs.get(chatbot_type)))
 # Fallback if chatbot_type is not recognized
 config = chatbot_configs.get(chatbot_type, 1)
 
