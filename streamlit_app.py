@@ -69,7 +69,11 @@ else:
         # Generate AI response
         stream = client.chat.completions.create(
             model="gpt-3.5-turbo",
-            messages=st.session_state.messages,
+            # messages=st.session_state.messages,
+            messages = [
+                {"role": "system", "content": config["system_prompt"]},
+                {"role": "user", "content": prompt}
+            ],
             stream=True,
         )
 
