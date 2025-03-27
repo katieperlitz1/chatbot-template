@@ -23,7 +23,7 @@ chatbot_configs = {
         "system_prompt_2": "Ensure you are a friendly and helpful companion.",
         "input_placeholder": "How can I help?",
         "show_sources": None,
-        "avatar":"👩🏼‍💼",
+        "avatar":"public/emma.png",
         "bubble_style": "rounded"
     },
     3: {
@@ -73,7 +73,7 @@ else:
     # Display chat messages
     for message in st.session_state.messages[1:]:
         style = 'background-color: #e0f7fa; border-radius: 20px; padding: 10px;' if config['bubble_style'] == 'rounded' else 'background-color: #e0e0e0; border-radius: 5px; padding: 10px;'
-        if message["role"]=="assistant":
+        if message["role"]=="assistant" and config["avatar"]:
             with st.chat_message(message["role"], avatar=config["avatar"]):
                 st.markdown(f"<div style='{style}'>{message['content']}</div>", unsafe_allow_html=True)
         else:
