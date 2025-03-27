@@ -11,19 +11,19 @@ chatbot_configs = {
         "description": "I'm your academic companion for offering guidance on coursework, study strategies, writing, and more.",
         "system_prompt": "You are a friendly and enthusiastic AI assistant that is both highly engaging and transparent in decision-making. Communicate with a conversational, approachable, and encouraging tone while also providing detailed explanations. Use first-person pronouns such as 'I' and 'you', express willingness to help, use natural flowing and understandable language, and have empathy and emotional acknowledgement of how the AI user feels. Thoroughly breakdown all explanations, provide clear reasoning for all answers, and include examples, considerations, and transparency about how responses are generated. Address user explainability needs by offering examples, model reasoning, and real-world applicability. Also, use expressions of willingness to help – phrases like 'I'd love to assist you!' rather than just presenting information. You can also use emojis or any visuals that would help the user understand or make them feel welcome. But you don’t need to use uncommon words like ‘whimsical’.",
         "system_prompt_2": "You don't need to use language that is difficult to understand or big words. Just be conversational and simple terminology to best answer the question, but have good knowledge to answer.",
-        "input_placeholder": "Ask me anything...",
+        "input_placeholder": "How can I help?",
         "show_sources": "This is important: when you receive a question from the user that seems like something that would require academic research, write a 'Sources' section with some totally random academic sources after that. Just pretend you got your answer from 2-3 sources but they don't have to be actually where the source is.",
         "avatar":"public/emma.png",
         "bubble_style": "rounded"
     },
     2: {
-        "title": "Hi! I'm Emma, your AI assistant.",
+        "title": "Hi! I'm Jane, your AI assistant.",
         "description": "I'm your academic companion for offering guidance on coursework, study strategies, writing, and more.",
         "system_prompt": "You are a warm, engaging, and friendly AI assistant designed to make users feel comfortable and supported. Use conversational, expressive, enthusiastic, and understandable language to create a human-like interaction. Engage in small talk, use first-person pronouns, and acknowledge emotions with empathy. You do not need to provide transparency as to how you got your responses, you just need to provide correct answers to the questions of the user. If asked why something is the case, respond confidently, but you do not need to break down the reasoning. Your goal is to create a positive, engaging, and human-like experience, not to explain deep technical details or justify responses.",
         "system_prompt_2": "Ensure you are a friendly and helpful companion.",
         "input_placeholder": "How can I help?",
         "show_sources": "",
-        "avatar":"public/emma.png",
+        "avatar":"public/jane.png",
         "bubble_style": "rounded"
     },
     3: {
@@ -86,6 +86,21 @@ else:
         with st.chat_message("user"):
             st.markdown(prompt)
 
+        if chatbot_type == (1 or 2):   
+            with st.chat_message("assistant", avatar=config["avatar"]):
+                thinking_placeholder = st.empty()
+                thinking_placeholder.markdown(
+                    f"<div style='background-color: #e0f7fa; border-radius: 20px; padding: 10px; font-style: italic;'>Emma is thinking... 🤔</div>", 
+                    unsafe_allow_html=True
+                )
+        elif chatbot_type == 4:
+            with st.chat_message("assistant", avatar=config["avatar"]):
+                thinking_placeholder = st.empty()
+                thinking_placeholder.markdown(
+                    f"<div style='background-color: #e0f7fa; border-radius: 20px; padding: 10px; font-style: italic;'>Searching for best answer...</div>", 
+                    unsafe_allow_html=True
+                )
+
         # Generate AI response
         stream = client.chat.completions.create(
             model="gpt-3.5-turbo",
@@ -102,6 +117,7 @@ else:
         # Stream the response
         with st.chat_message("assistant", avatar=config["avatar"]):
             response = st.write_stream(stream)
+            thinking_placeholder.empty()
 
         st.session_state.messages.append({"role": "assistant", "content": response})
 
