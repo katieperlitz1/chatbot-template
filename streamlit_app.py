@@ -86,7 +86,7 @@ else:
         with st.chat_message("user"):
             st.markdown(prompt)
 
-        if chatbot_type == (1 or 2):   
+        if chatbot_type == 1 or 2:   
             with st.chat_message("assistant", avatar=config["avatar"]):
                 thinking_placeholder = st.empty()
                 thinking_placeholder.markdown(
@@ -117,7 +117,8 @@ else:
         # Stream the response
         with st.chat_message("assistant", avatar=config["avatar"]):
             response = st.write_stream(stream)
-            thinking_placeholder.empty()
+            if thinking_placeholder:
+                thinking_placeholder.empty()
 
         st.session_state.messages.append({"role": "assistant", "content": response})
 
