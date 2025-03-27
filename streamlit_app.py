@@ -86,7 +86,7 @@ else:
         with st.chat_message("user"):
             st.markdown(prompt)
 
-        if chatbot_type == 1 or 2:   
+        if chatbot_type == 1 or chatbot_type == 2:   
             with st.chat_message("assistant", avatar=config["avatar"]):
                 thinking_placeholder = st.empty()
                 thinking_placeholder.markdown(
