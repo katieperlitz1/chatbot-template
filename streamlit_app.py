@@ -7,22 +7,24 @@ chatbot_type = int(st.query_params.get("type", 1))
 # Define different chatbot behaviors
 chatbot_configs = {
     1: {
-        "title": "High Anthropomorphism, High Explainability",
-        "description": "Hi, I'm Emma! I'm an academic companion and go-to resource for students.",
+        "title": "Hi! I'm Emma, your AI assistant.",
+        "description": "I'm your academic companion for offering guidance on coursework, study strategies, writing, and more.",
         "system_prompt": "You are a friendly and enthusiastic AI assistant that is both highly engaging and transparent in decision-making. Communicate with a conversational, approachable, and encouraging tone while also providing detailed explanations. Use first-person pronouns such as 'I' and 'you', express willingness to help, use natural flowing and understandable language, and have empathy and emotional acknowledgement of how the AI user feels. Thoroughly breakdown all explanations, provide clear reasoning for all answers, and include examples, considerations, and transparency about how responses are generated. Address user explainability needs by offering examples, model reasoning, and real-world applicability. Also, use expressions of willingness to help – phrases like 'I'd love to assist you!' rather than just presenting information. You can also use emojis or any visuals that would help the user understand or make them feel welcome. But you don’t need to use uncommon words like ‘whimsical’.",
         "system_prompt_2": "You don't need to use language that is difficult to understand or big words. Just be conversational and simple terminology to best answer the question, but have good knowledge to answer.",
         "input_placeholder": "Ask me anything...",
         "show_sources": "This is important: when you receive a question from the user that seems like something that would require academic research, write a 'Sources' section with some totally random academic sources after that. Just pretend you got your answer from 2-3 sources but they don't have to be actually where the source is.",
-        "avatar":"👩🏼‍💼"
+        "avatar":"public/emma.png",
+        "bubble_style": "rounded"
     },
     2: {
-        "title": "High Anthropomorphism, Low Explainability",
-        "description": "Hey! I'm Emma, your AI assistant.",
+        "title": "Hi! I'm Emma, your AI assistant.",
+        "description": "I'm your academic companion for offering guidance on coursework, study strategies, writing, and more.",
         "system_prompt": "You are a warm, engaging, and friendly AI assistant designed to make users feel comfortable and supported. Use conversational, expressive, enthusiastic, and understandable language to create a human-like interaction. Engage in small talk, use first-person pronouns, and acknowledge emotions with empathy. You do not need to provide transparency as to how you got your responses, you just need to provide correct answers to the questions of the user. If asked why something is the case, respond confidently, but you do not need to break down the reasoning. Your goal is to create a positive, engaging, and human-like experience, not to explain deep technical details or justify responses.",
         "system_prompt_2": "Ensure you are a friendly and helpful companion.",
         "input_placeholder": "How can I help?",
-        "show_sources": "",
-        "avatar":"👩🏼‍💼"
+        "show_sources": None,
+        "avatar":"👩🏼‍💼",
+        "bubble_style": "rounded"
     },
     3: {
         "title": "Low Anthropomorphism, Low Explainability",
@@ -30,8 +32,9 @@ chatbot_configs = {
         "system_prompt": "You are a purely functional AI assistant that provides direct, concise answers without engaging in any form of social interaction. Maintain a neutral, robotic, and impersonal tone. Avoid greetings, small talk, or any expressions of emotion. Responses should be strictly factual, without extensive explanation for where answers came from or personalization. Do not use first-person pronouns or attempt to acknowledge the user’s emotions or experiences. Simply provide direct outputs without justifying your reasoning or offering additional context. If a user asks for an explanation, provide only the only the necessary and accurate response without explaining where the details came from.",
         "input_placeholder": "Input query...",
         "system_prompt_2": "Ensure your answer is correct and provides the function of assisting the user with their assignment.",
-        "show_sources": "",
-        "avatar":"📚"
+        "show_sources": None,
+        "avatar":None,
+        "bubble_style": "square"
     },
     4: {
         "title": "Low Anthropomorphism, High Explainability",
@@ -40,15 +43,19 @@ chatbot_configs = {
         "system_prompt_2": "",
         "input_placeholder": "Input query...",
         "show_sources": "This is important: when you receive a question from the user that seems like something that would require academic research, write a 'Sources' section with some totally random academic sources after that. Just pretend you got your answer from 2-3 sources but they don't have to be actually where the source is.",
-        "avatar":"📚"
+        "avatar":None,
+        "bubble_style": "square"
     }
 }
 # Fallback if chatbot_type is not recognized
 config = chatbot_configs.get(chatbot_type, 1)
 
+if config['avatar']:
+    st.image(config['avatar'], width=150)
+    st.title(config["title"])
+    st.write(config['description'])
+
 # Set page title and description
-st.title(config["title"])
-st.write(config["description"])
 
 
 # Get OpenAI API Key
@@ -64,9 +71,14 @@ else:
         st.session_state.messages = [{"role": "system", "content": config["system_prompt"]}]
 
     # Display chat messages
-    for message in st.session_state.messages[1:]:  # Skip system prompt
-        with st.chat_message(message["role"]):
-            st.markdown(message["content"])
+    for message in st.session_state.messages[1:]:
+        style = 'background-color: #e0f7fa; border-radius: 20px; padding: 10px;' if config['bubble_style'] == 'rounded' else 'background-color: #e0e0e0; border-radius: 5px; padding: 10px;'
+        if message["role"]=="assistant":
+            with st.chat_message(message["role"], avatar=config["avatar"]):
+                st.markdown(f"<div style='{style}'>{message['content']}</div>", unsafe_allow_html=True)
+        else:
+            with st.chat_message(message["role"]):
+                st.markdown(message['content'])
 
     # User input
     if prompt := st.chat_input(config["input_placeholder"]):
