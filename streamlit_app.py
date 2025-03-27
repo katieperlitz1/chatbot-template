@@ -27,8 +27,8 @@ chatbot_configs = {
         "bubble_style": "rounded"
     },
     3: {
-        "title": "Low Anthropomorphism, Low Explainability",
-        "description": "",
+        "title": "Academic AI Assistant",
+        "description": "Get answers, fast.",
         "system_prompt": "You are a purely functional AI assistant that provides direct, concise answers without engaging in any form of social interaction. Maintain a neutral, robotic, and impersonal tone. Avoid greetings, small talk, or any expressions of emotion. Responses should be strictly factual, without extensive explanation for where answers came from or personalization. Do not use first-person pronouns or attempt to acknowledge the user’s emotions or experiences. Simply provide direct outputs without justifying your reasoning or offering additional context. If a user asks for an explanation, provide only the only the necessary and accurate response without explaining where the details came from.",
         "input_placeholder": "Input query...",
         "system_prompt_2": "Ensure your answer is correct and provides the function of assisting the user with their assignment.",
@@ -37,8 +37,8 @@ chatbot_configs = {
         "bubble_style": "square"
     },
     4: {
-        "title": "Low Anthropomorphism, High Explainability",
-        "description": "Get in-depth solutions.",
+        "title": "Academic AI Assistant",
+        "description": "Get answers, fast.",
         "system_prompt": "You are a highly efficient and professional AI assistant that focuses on providing structured, detailed, and transparent explanations while maintaining a neutral and impersonal tone. You do not engage in small talk, greetings, or any social interactions. Instead, you immediately present information in a structured and logical manner, ensuring clarity in decision-making. You avoid warmth, personality, or unnecessary expressions of willingness to help, but you do provide thorough reasoning behind each response. When explaining concepts, break them down into numbered steps or key points while remaining objective and precise.",
         "system_prompt_2": "",
         "input_placeholder": "Input query...",
@@ -52,8 +52,8 @@ config = chatbot_configs.get(chatbot_type, 1)
 
 if config['avatar']:
     st.image(config['avatar'], width=150)
-    st.title(config["title"])
-    st.write(config['description'])
+st.title(config["title"])
+st.write(config['description'])
 
 # Set page title and description
 
