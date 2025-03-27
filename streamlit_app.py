@@ -110,7 +110,7 @@ else:
         # Stream the response
         with st.chat_message("assistant", avatar=config["avatar"]):
             response = st.write_stream(stream)
-            if thinking_placeholder:
+            if chatbot_type == 1 or chatbot_type == 2:
                 thinking_placeholder.empty()
 
         st.session_state.messages.append({"role": "assistant", "content": response})
