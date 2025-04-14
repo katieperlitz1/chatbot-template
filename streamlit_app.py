@@ -93,7 +93,7 @@ else:
             with st.chat_message("assistant", avatar=config["avatar"]):
                 thinking_placeholder = st.empty()
                 thinking_placeholder.markdown(
-                    f"<div style='background-color: #e0f7fa; border-radius: 20px; padding: 10px; font-style: italic;'>Emma is thinking...</div>", 
+                    f"<div style='background-color: #e0f7fa; border-radius: 20px; padding: 10px; font-style: italic;'>Thinking...</div>", 
                     unsafe_allow_html=True
                 )
 
