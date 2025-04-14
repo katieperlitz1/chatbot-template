@@ -54,7 +54,10 @@ if config['avatar']:
     st.image(config['avatar'], width=150)
 st.title(config["title"])
 st.write(config['description'])
-
+st.markdown(
+    "<span style='color: orange; font-size: 0.9em;'>⚠️ Please keep in mind that this chatbot does not remember previous messages or conversations due to privacy reasons. For the best experience, include any important context or details in your message.</span>",
+    unsafe_allow_html=True
+)
 # Set page title and description
 
 
