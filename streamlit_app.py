@@ -1,6 +1,17 @@
 import streamlit as st
 from openai import OpenAI
 
+import urllib
+
+# Preserve current query string
+params = st.query_params.to_dict()
+url = f"{st.request.url}?{urllib.parse.urlencode(params)}"
+
+st.markdown(
+    f'<a href="{url}" target="_blank" style="color:blue; font-size:0.9em;">🔎 Open in Fullscreen</a>',
+    unsafe_allow_html=True
+)
+
 # Get chatbot type from query parameters
 chatbot_type = int(st.query_params.get("type", 1))
 
